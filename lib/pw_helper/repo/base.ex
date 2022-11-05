@@ -1,4 +1,4 @@
-defmodule ApiCore.Repository.Base do
+defmodule PwHelper.Repo.Base do
   defmacro __using__(opts) do
     quote bind_quoted: [opts: opts] do
       import Ecto.Query, only: [from: 2, where: 2, where: 3, offset: 2, limit: 2]
