@@ -30,7 +30,7 @@ defmodule PwHelperTest.View.Success do
       updated_at: ~N[2022-11-06 01:52:54]
     }
 
-    assert PwHelper.View.Success.message_list(map)
+    assert IO.inspect(PwHelper.View.Success.status_ok(map, :no_message))
     assert PwHelper.View.Success.message_list(user)
   end
 end

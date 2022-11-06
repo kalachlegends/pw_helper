@@ -3,6 +3,10 @@ defmodule PwHelper.View.Success do
     Map.merge(%{"status" => "ok"}, map_normalize(data, data_name))
   end
 
+  def status_ok(data, :no_message) do
+    Map.merge(%{"status" => "ok"}, PwHelper.Normalize.repo(data))
+  end
+
   defp map_normalize(data, data_name), do: %{"#{data_name}" => PwHelper.Normalize.repo(data)}
 
   @doc """
@@ -27,6 +31,6 @@ defmodule PwHelper.View.Success do
       end
     end)
     |> Map.new()
-    |> status_ok("message")
+    |> status_ok(:no_message)
   end
 end
