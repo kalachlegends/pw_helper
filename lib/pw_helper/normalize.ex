@@ -3,11 +3,12 @@ defmodule PwHelper.Normalize do
   defstruct name: 12, l: 2, __meta__: 123, asdda: [123, 123_213]
 
   @doc """
-  
+
   """
   def repo(repo) do
     cond do
       is_struct(repo) -> normalize_repo(repo)
+      is_map(repo) -> normalize_repo(repo)
       is_list(repo) -> nomalize_list_for_repo(repo)
       true -> repo
     end
@@ -17,7 +18,7 @@ defmodule PwHelper.Normalize do
     cond do
       Keyword.keyword?(struct) -> normalize_repo(struct, :normalize)
       is_struct(struct) -> normalize_map(struct) |> normalize_repo(:normalize)
-      is_map(struct) -> normalize_repo(:normalize)
+      is_map(struct) -> normalize_map(struct, :map) |> normalize_repo(:normalize)
       true -> struct
     end
   end
@@ -45,6 +46,13 @@ defmodule PwHelper.Normalize do
     struct
     |> Map.from_struct()
     |> Map.delete(:__meta__)
+    |> Map.delete(:__struct__)
+  end
+
+  def normalize_map(struct, :map) do
+    struct
+    |> Map.delete(:__meta__)
+    |> Map.delete(:__struct__)
   end
 
   def nomalize_list_for_repo(list) when is_list(list) do

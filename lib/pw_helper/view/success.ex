@@ -10,21 +10,23 @@ defmodule PwHelper.View.Success do
   """
   def message_list(data_list, map_taker \\ [], take_it \\ []) do
     data_list
+    |> PwHelper.Normalize.repo()
     |> Enum.map(fn {key, value} ->
       cond do
         is_map(value) ->
           finder = Enum.find(map_taker, fn x -> x == key end)
 
           if !is_nil(finder) do
-            map_normalize(Map.take(value, take_it), key)
+            {key, Map.take(value, take_it)}
           else
-            map_normalize(value, key)
+            {key, value}
           end
 
         true ->
-          map_normalize(value, key)
+          {key, value}
       end
     end)
+    |> Map.new()
     |> status_ok("message")
   end
 end
