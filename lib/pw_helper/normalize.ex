@@ -35,6 +35,9 @@ defmodule PwHelper.Normalize do
         is_atom(value) ->
           {key, Atom.to_string(value)}
 
+        is_tuple(value) ->
+          {key, turple_normalize(value)}
+
         true ->
           {key, value}
       end
@@ -42,10 +45,15 @@ defmodule PwHelper.Normalize do
     |> Map.new()
   end
 
+  def turple_normalize(turple) when is_tuple(turple) do
+    Tuple.to_list(turple) |> Enum.join(",")
+  end
+
   def normalize_map(struct) do
     struct
     |> Map.from_struct()
     |> Map.delete(:__meta__)
+    |> Map.delete(:__struct__)
     |> Map.delete(:__struct__)
   end
 
