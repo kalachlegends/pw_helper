@@ -3,7 +3,7 @@ defmodule PwHelper.Normalize do
   defstruct name: 12, l: 2, __meta__: 123, asdda: [123, 123_213]
 
   @doc """
-
+  
   """
   def repo(repo) do
     cond do
@@ -53,7 +53,6 @@ defmodule PwHelper.Normalize do
     struct
     |> Map.from_struct()
     |> Map.delete(:__meta__)
-    |> Map.delete(:__struct__)
     |> Map.delete(:__struct__)
   end
 
