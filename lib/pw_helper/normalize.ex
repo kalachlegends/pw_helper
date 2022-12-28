@@ -38,11 +38,18 @@ defmodule PwHelper.Normalize do
         is_tuple(value) ->
           {key, turple_normalize(value)}
 
+        is_map(value) ->
+          {key, normalize_repo(value)}
+
         true ->
           {key, value}
       end
     end)
     |> Map.new()
+  end
+
+  def time_to_string(time) do
+    time |> Time.to_string()
   end
 
   def turple_normalize(turple) when is_tuple(turple) do
