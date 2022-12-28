@@ -73,10 +73,10 @@ defmodule PwHelper.Error do
   end
 
   def not_found(item) when is_list(item) do
-    if slides == [], do: {:error, :not_found}, else: {:ok, slides}
+    if item == [], do: {:error, :not_found}, else: {:ok, item}
   end
 
   def not_found(item) do
-    if is_nil(item), do: {:error, :not_found}, else: {:ok, slides}
+    if is_nil(item), do: {:error, :not_found}, else: {:ok, item}
   end
 end
