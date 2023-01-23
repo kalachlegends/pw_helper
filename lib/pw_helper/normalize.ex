@@ -26,6 +26,15 @@ defmodule PwHelper.Normalize do
   defp normalize_repo(struct, :normalize) do
     Enum.map(struct, fn {key, value} ->
       cond do
+        is_struct(value) and check_time(value) ->
+          {key, time_to_string(value)}
+
+        is_struct(value) and native_check_time(value) ->
+          {key, time_to_string(value)}
+
+        is_struct(value) and check_time(value) ->
+          {key, time_to_string(value)}
+
         is_struct(value) ->
           {key, normalize_repo(value)}
 
@@ -50,6 +59,22 @@ defmodule PwHelper.Normalize do
 
   def time_to_string(time) do
     time |> Time.to_string()
+  end
+
+  defp check_time(time = %Time{}) do
+    true
+  end
+
+  defp check_time(_time) do
+    false
+  end
+
+  defp native_check_time(time = %NaiveDateTime{}) do
+    true
+  end
+
+  defp native_check_time(_time) do
+    false
   end
 
   def turple_normalize(turple) when is_tuple(turple) do
