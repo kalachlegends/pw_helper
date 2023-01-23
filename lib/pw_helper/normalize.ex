@@ -61,7 +61,7 @@ defmodule PwHelper.Normalize do
     time |> Time.to_string()
   end
 
-  defp check_time(time = %Time{}) do
+  defp check_time(_time = %Time{}) do
     true
   end
 
@@ -69,7 +69,7 @@ defmodule PwHelper.Normalize do
     false
   end
 
-  defp native_check_time(time = %NaiveDateTime{}) do
+  defp native_check_time(_time = %NaiveDateTime{}) do
     true
   end
 
