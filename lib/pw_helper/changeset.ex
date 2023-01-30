@@ -1,6 +1,9 @@
 defmodule PwHelper.Changeset do
   import Ecto.Changeset, only: [update_change: 3, validate_format: 4]
 
+  @moduledoc """
+  # Module for changeset
+  """
   def enum_type_check(%Ecto.Changeset{changes: changes} = changeset, field, type, opts \\ %{})
       when is_atom(field) do
     if is_nil(changes[field]) do
@@ -27,6 +30,9 @@ defmodule PwHelper.Changeset do
     )
   end
 
+  @doc """
+  # Check for link
+  """
   def link_check(%Ecto.Changeset{} = changeset, field) when is_atom(field) do
     changeset
     |> validate_format(
@@ -76,6 +82,9 @@ defmodule PwHelper.Changeset do
     |> update_change(field, &trim_handler/1)
   end
 
+  @doc """
+  # Trim string
+  """
   def normalize_string(%Ecto.Changeset{} = changeset, fiels)
       when is_list(fiels) do
     Enum.reduce(fiels, changeset, fn field, acc ->
@@ -89,6 +98,9 @@ defmodule PwHelper.Changeset do
 
   def security_check(%Ecto.Changeset{} = changeset, nil, _opts), do: changeset
 
+  @doc """
+  # Check string in <>
+  """
   def security_check(%Ecto.Changeset{changes: changes} = changeset, field, opts)
       when is_atom(field) do
     cond do

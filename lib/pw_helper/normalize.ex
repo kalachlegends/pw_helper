@@ -3,7 +3,9 @@ defmodule PwHelper.Normalize do
   defstruct name: 12, l: 2, __meta__: 123, asdda: [123, 123_213]
 
   @doc """
+  # Normalize for repo struct
   
+  Change time and make struct to map
   """
   def repo(repo) do
     cond do
@@ -34,6 +36,12 @@ defmodule PwHelper.Normalize do
 
         is_struct(value) and check_time(value) ->
           {key, time_to_string(value)}
+
+        is_struct(value) and check_utc(value) ->
+          {key, time_to_string(value)}
+
+        value == nil ->
+          {key, nil}
 
         is_struct(value) ->
           {key, normalize_repo(value)}
@@ -71,6 +79,14 @@ defmodule PwHelper.Normalize do
 
   defp native_check_time(_time = %NaiveDateTime{}) do
     true
+  end
+
+  def check_utc(_time = %DateTime{}) do
+    true
+  end
+
+  def check_utc(_time) do
+    false
   end
 
   defp native_check_time(_time) do
