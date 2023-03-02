@@ -46,11 +46,11 @@ defmodule PwHelper.Normalize do
         is_struct(value) ->
           {key, normalize_repo(value)}
 
+        check_assoction(value) ->
+          {key, nil}
+
         is_list(value) ->
           {key, nomalize_list_for_repo(value)}
-
-        is_atom(value) ->
-          {key, Atom.to_string(value)}
 
         is_tuple(value) ->
           {key, turple_normalize(value)}
@@ -67,30 +67,6 @@ defmodule PwHelper.Normalize do
 
   def time_to_string(time) do
     time |> Time.to_string()
-  end
-
-  defp check_time(_time = %Time{}) do
-    true
-  end
-
-  defp check_time(_time) do
-    false
-  end
-
-  defp native_check_time(_time = %NaiveDateTime{}) do
-    true
-  end
-
-  def check_utc(_time = %DateTime{}) do
-    true
-  end
-
-  def check_utc(_time) do
-    false
-  end
-
-  defp native_check_time(_time) do
-    false
   end
 
   def turple_normalize(turple) when is_tuple(turple) do
@@ -116,4 +92,22 @@ defmodule PwHelper.Normalize do
       true -> list
     end
   end
+
+  defp check_time(_time = %Time{}), do: true
+
+  defp check_time(_time), do: false
+
+  defp native_check_time(_time = %NaiveDateTime{}), do: true
+
+  def check_utc(_time = %DateTime{}), do: true
+
+  def check_utc(_time), do: false
+
+  defp native_check_time(_time), do: false
+
+  def check_assoction(_assoc = %Ecto.Association.NotLoaded{}) do
+    true
+  end
+
+  def check_assoction(_assoc), do: false
 end
