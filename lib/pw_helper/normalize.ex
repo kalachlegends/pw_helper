@@ -43,7 +43,7 @@ defmodule PwHelper.Normalize do
         value == nil ->
           {key, nil}
 
-        is_struct(value) ->
+        is_struct(value) and !check_assoction(value) ->
           {key, normalize_repo(value)}
 
         check_assoction(value) ->
