@@ -4,7 +4,7 @@ defmodule PwHelper.Normalize do
 
   @doc """
   # Normalize for repo struct
-  
+
   Change time and make struct to map
   """
   def repo(repo) do
@@ -66,7 +66,7 @@ defmodule PwHelper.Normalize do
   end
 
   def time_to_string(time) do
-    time |> Time.to_string()
+    time |> NaiveDateTime.to_iso8601()
   end
 
   def turple_normalize(turple) when is_tuple(turple) do
