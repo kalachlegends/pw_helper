@@ -39,7 +39,7 @@ defmodule PwHelper.Normalize do
           {key, time_to_string(value)}
 
         Decimal.is_decimal(value) ->
-          Decimal.to_float(value)
+          {key, Decimal.to_float(value)}
 
         is_struct(value) and check_utc(value) ->
           {key, time_to_string(value)}
