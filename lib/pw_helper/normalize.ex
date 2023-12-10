@@ -1,5 +1,6 @@
 defmodule PwHelper.Normalize do
   @moduledoc false
+  require Decimal
   defstruct name: 12, l: 2, __meta__: 123, asdda: [123, 123_213]
 
   @doc """
@@ -36,6 +37,9 @@ defmodule PwHelper.Normalize do
 
         is_struct(value) and check_time(value) ->
           {key, time_to_string(value)}
+
+        Decimal.is_decimal(value) ->
+          Decimal.to_float(value)
 
         is_struct(value) and check_utc(value) ->
           {key, time_to_string(value)}
